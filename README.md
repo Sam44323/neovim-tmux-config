@@ -61,7 +61,7 @@ With restore system of tmux using `tmux-continuum` and `tmux-resurrect`, post sy
 PWD for neovim and tmux are as such:
 
 Neovim: `~/.config/nvim` <br/>
-Tmux: `~/.tmux/` (you could have your configs in `~/.config/.tmux`, but I prefer a cleaned dir. for `tmux`
+Tmux: `~/.tmux/` (you could have your configs in `~/.config/.tmux`, but I prefer a cleaned dir. for `tmux`)
 
 # License
 
