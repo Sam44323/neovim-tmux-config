@@ -2,7 +2,7 @@
 
 Personal Neovim (AstroNvim v6) and tmux configuration.
 
-## Neovim Plugins
+# Neovim-Plugins
 
 | Plugin | Use |
 |---|---|
@@ -33,7 +33,7 @@ Personal Neovim (AstroNvim v6) and tmux configuration.
 - **LuaSnip** — snippet engine with filetype extends
 - **better-escape.nvim** (disabled) — `jk`/`jj` to escape
 
-## Tmux Plugins (via TPM)
+# Tmux-Plugins (via TPM)
 
 | Plugin | Use |
 |---|---|
@@ -44,14 +44,25 @@ Personal Neovim (AstroNvim v6) and tmux configuration.
 | [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect) | Save/restore tmux environment |
 | [tmux-continuum](https://github.com/tmux-plugins/tmux-continuum) | Auto-save every 10min, restore on-start |
 
-### Settings
+# Settings
 
 Mouse enabled, base indexing starts at 1, splits/new windows open in current pane's working directory.
 
-### Enabler
+# Enabler
 
 Sync with `:Lazy sync` on addition of the plugins for `neovim` and `<C-b> Shift + I` for tmux for the installation of the plugins
 
-## License
+# Caveats
+
+With restore system of tmux using `tmux-continuum` and `tmux-resurrect`, post system re-start you might not be able to see the list of active sessions using `tmux ls`. For that very reason, start an empty session, which pushes resurrect to re-sync with the plugins configs and once you `detach` from that session, doing `tmux ls` would show all the past-sessions
+
+# Config
+
+PWD for neovim and tmux are as such:
+
+Neovim: `~/.config/nvim`
+Tmux: `~/.tmux/` (you could have your configs in `~/.config/.tmux`, but I prefer a cleaned dir. for `tmux`
+
+# License
 
 Unlicense (public domain).
