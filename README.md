@@ -48,6 +48,10 @@ Personal Neovim (AstroNvim v6) and tmux configuration.
 
 Mouse enabled, base indexing starts at 1, splits/new windows open in current pane's working directory.
 
+### Enabler
+
+Sync with `:Lazy sync` on addition of the plugins for `neovim` and `<C-b> Shift + I` for tmux for the installation of the plugins
+
 ## License
 
 Unlicense (public domain).
