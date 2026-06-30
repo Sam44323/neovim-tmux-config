@@ -65,4 +65,4 @@ Tmux: `~/.tmux/` (you could have your configs in `~/.config/.tmux`, but I prefer
 
 # License
 
-Unlicense (public domain).
+Unlicense
