@@ -46,7 +46,7 @@ Personal Neovim (AstroNvim v6) and tmux configuration.
 
 # Settings
 
-Mouse enabled, base indexing starts at 1, splits/new windows open in current pane's working directory.
+Mouse enabled, base indexing starts at 1, splits/new windows open in current pane's active-directory.
 
 # Enabler
 
