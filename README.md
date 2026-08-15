@@ -10,7 +10,7 @@ Personal Neovim (AstroNvim v6) and tmux configuration.
 | [astrocore](https://github.com/AstroNvim/astrocore) | Core vim options (tabs=2, relativenumber, scrolloff=8, clipboard, splits, search) |
 | [astrolsp](https://github.com/AstroNvim/astrolsp) | LSP config: format-on-save, codelens, semantic tokens, inlay hints |
 | [astroui](https://github.com/AstroNvim/astroui) | UI: astrodark theme, custom cursor/visual/illuminated highlights, spinner icons |
-| [heirline.nvim](https://github.com/rebelot/heirline.nvim) | Statusline: custom workspace status component (pinned 📌 text from `SetWorkspaceText`/`ClearWorkspaceText`) |
+| [heirline.nvim](https://github.com/rebelot/heirline.nvim) | Statusline: workspace status component (pinned 📌 text). Shortcuts: `<leader>xs` set (`SetWorkspaceText`), `<leader>xc` clear (`ClearWorkspaceText`) — persisted to `.workspace_status.txt` (auto-added to project `.gitignore`), defined in `polish.lua` |
 | [mason.nvim](https://github.com/mason-org/mason.nvim) | LSP tool manager; install servers: lua_ls, ts_ls, rust_analyzer, solidity_ls_nomicfoundation, pyright (via [mason-org/mason-lspconfig.nvim](https://github.com/mason-org/mason-lspconfig.nvim)) |
 | [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) | Fuzzy finder: `<C-p>` files, `<C-f>` live grep, `<leader>fg` grep, `<leader>fb` buffers, `<leader>fh` help |
 | [telescope-fzf-native](https://github.com/nvim-telescope/telescope-fzf-native.nvim) | FZF sorting for Telescope |
