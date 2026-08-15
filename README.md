@@ -10,12 +10,14 @@ Personal Neovim (AstroNvim v6) and tmux configuration.
 | [astrocore](https://github.com/AstroNvim/astrocore) | Core vim options (tabs=2, relativenumber, scrolloff=8, clipboard, splits, search) |
 | [astrolsp](https://github.com/AstroNvim/astrolsp) | LSP config: format-on-save, codelens, semantic tokens, inlay hints |
 | [astroui](https://github.com/AstroNvim/astroui) | UI: astrodark theme, custom cursor/visual/illuminated highlights, spinner icons |
+| [heirline.nvim](https://github.com/rebelot/heirline.nvim) | Statusline: custom workspace status component (pinned 📌 text from `SetWorkspaceText`/`ClearWorkspaceText`) |
+| [mason.nvim](https://github.com/mason-org/mason.nvim) | LSP tool manager; install servers: lua_ls, ts_ls, rust_analyzer, solidity_ls_nomicfoundation, pyright (via [mason-org/mason-lspconfig.nvim](https://github.com/mason-org/mason-lspconfig.nvim)) |
 | [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) | Fuzzy finder: `<C-p>` files, `<C-f>` live grep, `<leader>fg` grep, `<leader>fb` buffers, `<leader>fh` help |
 | [telescope-fzf-native](https://github.com/nvim-telescope/telescope-fzf-native.nvim) | FZF sorting for Telescope |
 | [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator) | Seamless vim/tmux pane nav with `Ctrl+h/j/k/l` |
 | [supermaven-nvim](https://github.com/supermaven-inc/supermaven-nvim) | AI inline autocomplete, accept with `<C-l>` |
 | [opencode.nvim](https://github.com/nickjvandyke/opencode.nvim) | AI assistant: `<leader>oa` ask, `<leader>os` select, `go`/`goo` operators |
-| [vim-fugitive](https://github.com/tpope/vim-fugitive) | Git: `<leader>gs` status, `<leader>gd` 3-way diff |
+| [vim-fugitive](https://github.com/tpope/vim-fugitive) | Git: `<leader>gs` status, `<leader>gd` 3-way diff, `<leader>gch` choose current (left), `<leader>gcl` choose incoming (right) |
 | [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Git signs: `]c`/`[c` hunk nav, `<leader>ghs` stage, `<leader>ghr` reset, `<leader>ghp` preview, `<leader>ghb` blame |
 | [rustaceanvim](https://github.com/mrcjkb/rustaceanvim) | Rust IDE with codelldb DAP, auto-format on save |
 | [move.vim](https://github.com/yanganto/move.vim) | Move (Sui) syntax highlighting + `move-analyzer` LSP |
@@ -25,13 +27,15 @@ Personal Neovim (AstroNvim v6) and tmux configuration.
 | [resession.nvim](https://github.com/stevearc/resession.nvim) | Session management: `:SessionSave`, `:SessionRestore`, `:SessionDelete` |
 | [vim-visual-multi](https://github.com/mg979/vim-visual-multi) | Multi-cursor editing |
 
-### Additional (in `user.lua`, disabled by default)
+### Additional (disabled by default)
 
-- **snacks.nvim** — dashboard with ASCII art header
-- **nvim-autopairs** — auto-pairing with custom `$` rules for tex/latex
-- **todo-comments.nvim** — highlight TODO/FIXME comments
-- **LuaSnip** — snippet engine with filetype extends
-- **better-escape.nvim** (disabled) — `jk`/`jj` to escape
+The following live in `lua/plugins/` but are `disabled` (each file starts with `if true then return {} end` — remove the guard to activate):
+
+- **`plugins/user.lua`** — snacks.nvim dashboard (ASCII art header), nvim-autopairs (custom `$` rules for tex/latex), todo-comments.nvim, LuaSnip (filetype extends), better-escape.nvim (`jk`/`jj`)
+- **`plugins/treesitter.lua`** — Treesitter highlight/indent config; overrides `ensure_installed` (AstroNvim bundles nvim-treesitter)
+- **`plugins/none-ls.lua`** — none-ls.nvim formatting & diagnostics sources (commented out)
+
+> Note: `neovim/mason.lua` (top level) is a standalone Mason spec ensuring lua_ls, ts_ls, rust_analyzer, `solidity_ls_nomicfoundation`, and pyright. It is not imported via `plugins/` by `lazy_setup.lua`, so confirm it is wired in before relying on it.
 
 # Tmux-Plugins (via TPM)
 
