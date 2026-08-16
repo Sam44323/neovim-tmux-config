@@ -1,5 +1,3 @@
--- if true then return end -- remove this
-
 -- This will run last in the setup process.
 
 vim.opt.smoothscroll = true
@@ -14,6 +12,9 @@ vim.opt.ttyfast = true
 vim.opt.cursorline = false
 vim.opt.relativenumber = false
 
+-----------------------------------------------------------------------------
+-- FEATURE 1: WORKSPACE STATUS TEXT (Local File)
+-----------------------------------------------------------------------------
 -- Define the local file name to store the text
 local status_filename = ".workspace_status.txt"
 
@@ -71,7 +72,7 @@ local function load_status_text()
 	return ""
 end
 
--- 1. Initialize text when Neovim starts
+-- Initialize text when Neovim starts
 vim.g.my_status_text = load_status_text()
 
 -- Automatically swap text if you change directories inside Neovim
@@ -82,7 +83,7 @@ vim.api.nvim_create_autocmd("DirChanged", {
 	end,
 })
 
--- 2. Create the User Commands
+-- Create the User Commands for Status Text
 vim.api.nvim_create_user_command("SetWorkspaceText", function()
 	vim.ui.input({ prompt = "Workspace Note: " }, function(input)
 		if input ~= nil then
@@ -99,14 +100,108 @@ vim.api.nvim_create_user_command("ClearWorkspaceText", function()
 	vim.cmd.redrawstatus()
 end, { desc = "Clear persistent workspace text" })
 
--- 3. Keyboard Shortcuts using <leader>x
+-----------------------------------------------------------------------------
+-- FEATURE 2: WORKSPACE REMINDER POPUP (Centralized File)
+-----------------------------------------------------------------------------
+local fn = vim.fn
+local api = vim.api
+
+-- Store reminders centrally so we don't dirty the git repositories
+local reminder_data_file = fn.stdpath("data") .. "/workspace_reminders.json"
+
+-- Helper to load reminders from disk
+local function load_reminders()
+	local f = io.open(reminder_data_file, "r")
+	if not f then
+		return {}
+	end
+
+	local content = f:read("*a")
+	f:close()
+
+	if content == "" then
+		return {}
+	end
+
+	local ok, parsed = pcall(fn.json_decode, content)
+	return (ok and type(parsed) == "table") and parsed or {}
+end
+
+-- Helper to save reminders to disk
+local function save_reminders(data)
+	local f = io.open(reminder_data_file, "w")
+	if f then
+		f:write(fn.json_encode(data))
+		f:close()
+	end
+end
+
+-- Command: Set a reminder popup for the current directory
+api.nvim_create_user_command("SetWorkspaceReminder", function()
+	vim.ui.input({ prompt = "Workspace Reminder: " }, function(input)
+		if input ~= nil and input ~= "" then
+			local reminders = load_reminders()
+			local cwd = fn.getcwd()
+
+			reminders[cwd] = input
+			save_reminders(reminders)
+
+			vim.notify("Reminder saved for this workspace.", vim.log.levels.INFO, { title = "Workspace Reminder" })
+		end
+	end)
+end, { desc = "Set popup reminder for workspace" })
+
+-- Command: Clear the reminder popup for the current directory
+api.nvim_create_user_command("ClearWorkspaceReminder", function()
+	local reminders = load_reminders()
+	local cwd = fn.getcwd()
+
+	if reminders[cwd] then
+		reminders[cwd] = nil
+		save_reminders(reminders)
+		vim.notify("Reminder cleared.", vim.log.levels.INFO, { title = "Workspace Reminder" })
+	else
+		vim.notify("No reminder found for this workspace.", vim.log.levels.WARN, { title = "Workspace Reminder" })
+	end
+end, { desc = "Clear popup reminder for workspace" })
+
+-- Autocommand: Trigger popup when opening a workspace
+local reminder_group = api.nvim_create_augroup("WorkspaceRemindersGroup", { clear = true })
+api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
+	group = reminder_group,
+	callback = function()
+		local reminders = load_reminders()
+		local cwd = fn.getcwd()
+		local msg = reminders[cwd]
+
+		if msg then
+			-- Defer slightly to ensure the UI is fully loaded before popping up
+			vim.defer_fn(function()
+				vim.notify(msg, vim.log.levels.WARN, {
+					title = "📌 Workspace Reminder",
+					timeout = 15000, -- Stays on screen for 15 seconds
+				})
+			end, 500)
+		end
+	end,
+})
+
+-----------------------------------------------------------------------------
+-- KEYBINDINGS
+-----------------------------------------------------------------------------
 -- Name the group in which-key so <leader>x shows up cleanly
 local wk_status_ok, wk = pcall(require, "which-key")
 if wk_status_ok then
 	wk.add({
-		{ "<leader>x", group = "Workspace Status" },
+		{ "<leader>x", group = "Workspace Notes/Reminders" },
 	})
 end
 
+-- Feature 1: Status Text bindings
 vim.keymap.set("n", "<leader>xs", "<cmd>SetWorkspaceText<cr>", { desc = "Set Workspace Text" })
 vim.keymap.set("n", "<leader>xc", "<cmd>ClearWorkspaceText<cr>", { desc = "Clear Workspace Text" })
+
+-- Feature 2: Reminder bindings
+vim.keymap.set("n", "<leader>xr", "<cmd>SetWorkspaceReminder<cr>", { desc = "Add Workspace Reminder" })
+vim.keymap.set("n", "<leader>xd", "<cmd>ClearWorkspaceReminder<cr>", { desc = "Clear Workspace Reminder" })
+
