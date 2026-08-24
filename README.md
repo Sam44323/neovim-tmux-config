@@ -1,6 +1,6 @@
 # neovim-tmux-config
 
-Personal Neovim (AstroNvim v6) and tmux configuration.
+Personal-Neovim (AstroNvim v6) and tmux configuration.
 
 # Neovim-Plugins
 
