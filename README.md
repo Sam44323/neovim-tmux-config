@@ -10,6 +10,7 @@ Personal Neovim (AstroNvim v6) and tmux configuration.
 | [astrocore](https://github.com/AstroNvim/astrocore) | Core vim options (tabs=2, relativenumber, scrolloff=8, clipboard, splits, search) |
 | [astrolsp](https://github.com/AstroNvim/astrolsp) | LSP config: format-on-save, codelens, semantic tokens, inlay hints |
 | [astroui](https://github.com/AstroNvim/astroui) | UI: astrodark theme, custom cursor/visual/illuminated highlights, spinner icons |
+| [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | Renders `markdown` (headings, code blocks, tables, lists, checkboxes); `ft = markdown`, `opts = {}`, depends on nvim-treesitter + nvim-web-devicons |
 | [heirline.nvim](https://github.com/rebelot/heirline.nvim) | Statusline: workspace status component (pinned 📌 text). Shortcuts: `<leader>xs` set (`SetWorkspaceText`), `<leader>xc` clear (`ClearWorkspaceText`) — persisted to `.workspace_status.txt` (auto-added to project `.gitignore`), defined in `polish.lua` |
 | `polish.lua` | Workspace reminder popup: per-cwd reminder shown on `VimEnter`/`DirChanged` (15s toast, title `📌 Workspace Reminder`), persisted to `~/.local/share/nvim/workspace_reminders.json`; `<leader>xr` set (`:SetWorkspaceReminder`), `<leader>xd` clear (`:ClearWorkspaceReminder`) |
 | [mason.nvim](https://github.com/mason-org/mason.nvim) | LSP tool manager; install servers: lua_ls, ts_ls, rust_analyzer, solidity_ls_nomicfoundation, pyright (via [mason-org/mason-lspconfig.nvim](https://github.com/mason-org/mason-lspconfig.nvim)) |
