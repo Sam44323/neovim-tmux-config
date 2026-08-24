@@ -2,7 +2,7 @@
 
 Personal-Neovim (AstroNvim v6) and tmux configuration.
 
-# Neovim-Plugins
+# Neovim-Plugins List
 
 | Plugin | Use |
 |---|---|
